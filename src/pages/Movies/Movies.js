@@ -7,7 +7,6 @@ import MoviesList from 'components/MoviesList';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
   const [loader, setLoader] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -22,7 +21,7 @@ const Movies = () => {
         const movieByQuery = await getMovieByQuery(currentQuery);
         setMovies(movieByQuery);
       } catch (error) {
-        setError(error);
+        console.log(error);
       } finally {
         setLoader(false);
       }

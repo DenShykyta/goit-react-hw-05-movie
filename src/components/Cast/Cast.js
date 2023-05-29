@@ -10,7 +10,6 @@ const DEFAULT_IMG = 'https://via.placeholder.com/124x186.png/CCCCCC/000000';
 const Cast = () => {
   const { movieId } = useParams();
   const [cast, setCast] = useState([]);
-  const [error, setError] = useState(null);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
@@ -20,7 +19,7 @@ const Cast = () => {
         const cast = await getCastMovie(movieId);
         setCast(cast);
       } catch (error) {
-        setError(error);
+        console.log(error);
       } finally {
         setLoader(false);
       }
@@ -35,7 +34,6 @@ const Cast = () => {
         {cast.map(({ id, profile_path, name, character, original_name }) => (
           <li key={id}>
             <img
-              //   src={BASE_POSTER_URL + profile_path}
               src={
                 profile_path
                   ? BASE_POSTER_URL + profile_path

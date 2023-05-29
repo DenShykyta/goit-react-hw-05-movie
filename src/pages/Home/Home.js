@@ -5,7 +5,6 @@ import Loader from '../../components/Loader';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
-  const [error, setError] = useState(null);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const Home = () => {
         const movies = await getTrendingMovies();
         setMovies(movies);
       } catch (error) {
-        setError(error);
+        console.log(error);
       } finally {
         setLoader(false);
       }

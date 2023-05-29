@@ -15,7 +15,6 @@ const DEFAULT_IMG = 'https://via.placeholder.com/320.png/CCCCCC/000000';
 
 const MovieCard = () => {
   const [movie, setMovie] = useState({});
-  const [error, setError] = useState(null);
   const [loader, setLoader] = useState(false);
   const { movieId } = useParams();
   const location = useLocation();
@@ -29,7 +28,7 @@ const MovieCard = () => {
         const movieById = await getMovieById(movieId);
         setMovie(movieById);
       } catch (error) {
-        setError(error);
+        console.log(error);
       } finally {
         setLoader(false);
       }
@@ -80,7 +79,7 @@ const MovieCard = () => {
             </NavLink>
           </li>
         </ul>
-        <Suspense fallback={<div>Loading subpage...</div>}>
+        <Suspense>
           <Outlet />
         </Suspense>
       </div>
