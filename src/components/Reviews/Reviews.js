@@ -6,7 +6,6 @@ import Loader from '../Loader';
 const Reviews = () => {
   const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
-  const [error, setError] = useState(null);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
@@ -16,7 +15,7 @@ const Reviews = () => {
         const Reviews = await getReviewsMovie(movieId);
         setReviews(Reviews);
       } catch (error) {
-        setError(error);
+        console.log(error);
       } finally {
         setLoader(false);
       }
