@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/475.9270c9b0.chunk.css","mappings":"AAAA,6BACE,iBAAkB,CAClB,aACF","sources":["components/MoviesList/MoviesList.module.css"],"sourcesContent":[".list_item {\n  list-style: inside;\n  padding: 3px 0;\n}\n"],"names":[],"sourceRoot":""}
