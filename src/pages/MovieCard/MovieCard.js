@@ -6,25 +6,32 @@ import {
   useParams,
 } from 'react-router-dom';
 import { Suspense, useState, useEffect } from 'react';
-import { getMovieById } from 'components/services/api';
+import { getMovieById } from 'services/api';
+import Loader from '../../components/Loader';
 import css from './MovieCard.module.css';
 
 const BASE_POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
+const DEFAULT_IMG = 'https://via.placeholder.com/320.png/CCCCCC/000000';
 
 const MovieCard = () => {
   const [movie, setMovie] = useState({});
+  const [error, setError] = useState(null);
+  const [loader, setLoader] = useState(false);
   const { movieId } = useParams();
   const location = useLocation();
 
-  const backLinkHref = location.state?.from ?? '/movies';
+  const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
+    setLoader(true);
     const fetchMovieById = async () => {
       try {
         const movieById = await getMovieById(movieId);
         setMovie(movieById);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoader(false);
       }
     };
     fetchMovieById();
@@ -35,9 +42,14 @@ const MovieCard = () => {
       <Link className={css.backLink} to={backLinkHref}>
         &#60; Go back
       </Link>
+      {loader && <Loader />}
       <div className={css.generalInfo}>
         <img
-          src={BASE_POSTER_URL + movie.poster_path}
+          src={
+            movie.poster_path
+              ? BASE_POSTER_URL + movie.poster_path
+              : `${DEFAULT_IMG}?text=${movie.title}`
+          }
           alt={movie.title}
           width="320px"
         />

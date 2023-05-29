@@ -1,24 +1,30 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getMovieByQuery } from 'components/services/api';
+import { getMovieByQuery } from 'services/api';
 import Form from 'components/searchForm/Form';
+import Loader from '../../components/Loader';
 import MoviesList from 'components/MoviesList';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+  const [loader, setLoader] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const currentQuery = searchParams.get('query');
-    if (currentQuery === null) {
+    if (!currentQuery) {
       return;
     }
     const fetchMovieByQuery = async () => {
+      setLoader(true);
       try {
         const movieByQuery = await getMovieByQuery(currentQuery);
         setMovies(movieByQuery);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoader(false);
       }
     };
     fetchMovieByQuery();
@@ -27,6 +33,7 @@ const Movies = () => {
   return (
     <div>
       <Form setSearchParams={setSearchParams} />
+      {loader && <Loader />}
       <MoviesList movies={movies} />
     </div>
   );

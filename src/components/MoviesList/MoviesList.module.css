@@ -1,4 +1,35 @@
+.movie_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .list_item {
-  list-style: inside;
+  list-style: none;
   padding: 3px 0;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  flex-basis: calc((100% - 50px) / 6);
+}
+
+.list_item:hover {
+  transform: scale(1.02);
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+.list_link {
+  text-decoration: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.movie_title {
+  color: black;
+}
+
+img {
+  object-fit: contain;
 }

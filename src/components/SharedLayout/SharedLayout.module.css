@@ -16,7 +16,6 @@
   text-decoration: none;
   font-weight: 500;
 }
-
-.active {
-  color: red;
+.navigation_item:hover {
+  color: blue;
 }
