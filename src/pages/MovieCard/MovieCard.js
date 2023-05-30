@@ -5,7 +5,7 @@ import {
   useLocation,
   useParams,
 } from 'react-router-dom';
-import { Suspense, useState, useEffect } from 'react';
+import { Suspense, useState, useEffect, useRef } from 'react';
 import { getMovieById } from 'services/api';
 import Loader from '../../components/Loader';
 import css from './MovieCard.module.css';
@@ -19,7 +19,7 @@ const MovieCard = () => {
   const { movieId } = useParams();
   const location = useLocation();
 
-  const backLinkHref = location.state?.from ?? '/';
+  const backLinkLocationRef = useRef(location.state?.from ?? '/');
 
   useEffect(() => {
     setLoader(true);
@@ -38,7 +38,7 @@ const MovieCard = () => {
 
   return (
     <>
-      <Link className={css.backLink} to={backLinkHref}>
+      <Link className={css.backLink} to={backLinkLocationRef.current}>
         &#60; Go back
       </Link>
       {loader && <Loader />}
@@ -69,14 +69,10 @@ const MovieCard = () => {
         <h5>Additional information</h5>
         <ul>
           <li>
-            <NavLink to="cast" state={location.state}>
-              Cast
-            </NavLink>
+            <NavLink to="cast">Cast</NavLink>
           </li>
           <li>
-            <NavLink to="reviews" state={location.state}>
-              Reviews
-            </NavLink>
+            <NavLink to="reviews">Reviews</NavLink>
           </li>
         </ul>
         <Suspense>
